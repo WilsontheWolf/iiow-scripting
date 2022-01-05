@@ -1,3 +1,6 @@
+const execMessage = require('./execMessage'); 
+const evalMessage = require('./evalMessage');
+const requestData = require('./requestData');
 const logMessage = require('./logMessage');
 
 module.exports = [
@@ -29,7 +32,8 @@ ${cmd.aliases[0] ? `\nAliases :: ${cmd.aliases.join(', ')}` : ''}`);
                 else console.log(`No command found called ${args.join(' ')}`);
             }
         }
-    }, {
+    },
+    {
         name: 'log',
         aliases: [],
         desc: 'Log something on client.',
@@ -38,6 +42,28 @@ Logs the msg.`,
         run: (args, socket) => {
             if(args.length < 1) return console.log('Please supply a message to log.');
             socket.write(logMessage(args.join(' ')));
+        }
+    },
+    {
+        name: 'exec',
+        aliases: ['run'],
+        desc: 'Run code.',
+        moreHelp: `exec [code]
+Executes the given code on the client.`,
+        run: (args, socket) => {
+            if(args.length < 1) return console.log('Please supply a string to exec.');
+            socket.write(execMessage(args.join(' ')));
+        }
+    },
+    {
+        name: 'eval',
+        aliases: [],
+        desc: 'Evaluate code.',
+        moreHelp: `eval [code]
+Evaluates the given code on the client.`,
+        run: async (args, socket) => {
+            if (args.length < 1) return console.log('Please supply a string to exec.');
+            console.log(await requestData(socket, evalMessage(args.join(' '))));
         }
     }
 ];

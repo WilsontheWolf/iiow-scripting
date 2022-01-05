@@ -18,12 +18,4 @@ if (!ds_map_exists(data, "type")) {
 
 
 // Process message
-var type = ds_map_find_value(data, "type");
-if(type == "log") {
-    var msg = ds_map_find_value(data, "msg");
-    if(!is_string(msg) || msg == "") {
-        console_log("WARNING: Server sent invalid log command (invalid msg).");
-        return;
-    }
-    console_log("SERVER: " + msg);
-}
+handle_message(data);
