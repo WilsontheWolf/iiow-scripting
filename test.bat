@@ -1,0 +1,2 @@
+echo %cd%
+echo hi

@@ -19,3 +19,5 @@ if (!ds_map_exists(data, "type")) {
 
 // Process message
 handle_message(data);
+
+ds_map_destroy(data);

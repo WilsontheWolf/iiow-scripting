@@ -1,7 +1,12 @@
-const execMessage = require('./execMessage'); 
+const execMessage = require('./execMessage');
 const evalMessage = require('./evalMessage');
 const requestData = require('./requestData');
 const logMessage = require('./logMessage');
+const createMessage = require('./createMessage');
+const tpMessage = require('./tpMessage');
+
+let testX = -10;
+let testY = -10;
 
 module.exports = [
     {
@@ -40,7 +45,7 @@ ${cmd.aliases[0] ? `\nAliases :: ${cmd.aliases.join(', ')}` : ''}`);
         moreHelp: `log [msg]
 Logs the msg.`,
         run: (args, socket) => {
-            if(args.length < 1) return console.log('Please supply a message to log.');
+            if (args.length < 1) return console.log('Please supply a message to log.');
             socket.write(logMessage(args.join(' ')));
         }
     },
@@ -51,7 +56,7 @@ Logs the msg.`,
         moreHelp: `exec [code]
 Executes the given code on the client.`,
         run: (args, socket) => {
-            if(args.length < 1) return console.log('Please supply a string to exec.');
+            if (args.length < 1) return console.log('Please supply a string to exec.');
             socket.write(execMessage(args.join(' ')));
         }
     },
@@ -64,6 +69,35 @@ Evaluates the given code on the client.`,
         run: async (args, socket) => {
             if (args.length < 1) return console.log('Please supply a string to exec.');
             console.log(await requestData(socket, evalMessage(args.join(' '))));
+        }
+    },
+    {
+        name: 'create',
+        aliases: [],
+        desc: 'Create a new iisland.',
+        moreHelp: `create [name]`,
+        run: async (args, socket) => {
+            socket.write(createMessage());
+        }
+    },
+    {
+        name: 'tp',
+        aliases: [],
+        desc: 'tp bob.',
+        moreHelp: `tp [x] [y]
+tp [x] [y] [xSpeed] [ySpeed]`,
+        run: async (args, socket) => {
+            if (args.length < 2) return console.log('Please supply x and y.');
+            socket.write(tpMessage(...args));
+        }
+    },
+    {
+        name: 'test',
+        aliases: [],
+        desc: 'Test command.',
+        moreHelp: `test [x] [y]`,
+        run: async (args, socket) => {
+            socket.write(JSON.stringify({ type: 'test' }))
         }
     }
 ];

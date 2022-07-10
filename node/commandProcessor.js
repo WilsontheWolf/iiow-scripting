@@ -2,6 +2,7 @@ const repl = require('repl');
 const commands = require('./commands');
 
 module.exports = (socket) => {
+    process.stdout.write('> ');
     const myRepl = repl.start({
         prompt: '> ',
         eval: async (inp) => {

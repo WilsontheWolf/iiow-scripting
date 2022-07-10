@@ -152,3 +152,5 @@ if mouse_check_button_released(mb_left)
 }
 if (global.executeStep != "")
     NSP_execute_string(global.executeStep)
+
+mp_game_loop();

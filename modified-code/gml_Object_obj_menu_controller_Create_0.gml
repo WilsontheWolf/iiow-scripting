@@ -1,0 +1,13 @@
+global.backgroundSoundNext = 54
+menuAmount = boolean_return(run_exists(), 8, 7)
+menuText = boolean_return(run_exists(), ["continue", "new game", "test", "tutorial", "news", "discord", "settings", "quit"], ["new game", "test", "tutorial", "news", "discord", "settings", "quit"])
+menuHover = array_create(menuAmount, 0)
+newGameTime = 0
+newGameMax = 60
+newGameText = ""
+global.gameMode = ""
+sprite_index = event_get_sprite(sprite_get_name(sprite_index))
+x = (((global.displayWidth - 384) - 128) / 2)
+y = (global.displayHeight / 2)
+image_xscale = (min(((global.displayWidth - 384) - 128), (global.displayHeight - 128)) / 200)
+image_yscale = image_xscale
